@@ -1,3 +1,4 @@
+import { Armazenador } from "./Armazenador.js";
 import { GrupoTransacao } from "./GrupoTransacao.js";
 import { TipoTransacao } from "./TipoTransacao.js";
 import { Transacao } from "./Transacao.js";
@@ -5,9 +6,9 @@ import { Transacao } from "./Transacao.js";
 export class Conta {
   nome: string;
   // é interessante manter o nome e saldo como protected, pois se houver a criação de novos tipos de contas, eles podem ser utilizados
-  protected saldo: number = JSON.parse(localStorage.getItem("saldo")) || 0;
+  protected saldo: number = Armazenador.getValor<number>("saldo") || 0;
   protected transacoes: Transacao[] =
-    JSON.parse(localStorage.getItem("transacoes"), (key: string, value: string) => {
+    Armazenador.getValor<Transacao[]>("transacoes", (key: string, value: string) => {
       if (key === "data") {
         return new Date(value);
       }
@@ -67,7 +68,7 @@ export class Conta {
 
     this.transacoes.push(novaTransacao);
     console.log(this.getGruposTransacoes());
-    localStorage.setItem("transacoes", JSON.stringify(this.transacoes));
+    Armazenador.setValor("transacoes", JSON.stringify(this.transacoes));
   }
 
   debitar(valor: number): void {
@@ -79,7 +80,7 @@ export class Conta {
     }
 
     this.saldo -= valor;
-    localStorage.setItem("saldo", this.saldo.toString());
+    Armazenador.setValor("saldo", this.saldo.toString());
   }
 
   depositar(valor: number): void {
@@ -88,7 +89,7 @@ export class Conta {
     }
 
     this.saldo += valor;
-    localStorage.setItem("saldo", this.saldo.toString());
+    Armazenador.setValor("saldo", this.saldo.toString());
   }
 }
 
