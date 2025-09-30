@@ -74,6 +74,16 @@ export class Conta {
         Armazenador.setValor("saldo", this.saldo.toString());
     }
 }
+export class ContaPremium extends Conta {
+    registrarTransacao(transacao) {
+        if (transacao.tipoTransacao === TipoTransacao.DEPOSITO) {
+            alert("você ganhou 50 centavos");
+            transacao.valor += 0.5;
+        }
+        super.registrarTransacao(transacao);
+    }
+}
 const meuNome = "Felipe Ventura";
 const conta = new Conta(meuNome);
+const contaPremium = new ContaPremium(meuNome);
 export default conta;

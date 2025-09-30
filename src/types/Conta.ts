@@ -93,8 +93,22 @@ export class Conta {
   }
 }
 
+export class ContaPremium extends Conta {
+  registrarTransacao(transacao: Transacao): void {
+    if (transacao.tipoTransacao === TipoTransacao.DEPOSITO) {
+      alert("você ganhou 50 centavos");
+      transacao.valor += 0.5;
+    }
+    super.registrarTransacao(transacao);
+  }
+
+  // constructor(parameters) {}
+}
+
 const meuNome: string = "Felipe Ventura";
 
 const conta = new Conta(meuNome);
+
+const contaPremium = new ContaPremium(meuNome);
 
 export default conta;
