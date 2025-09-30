@@ -1,6 +1,7 @@
 import { TipoTransacao } from "./TipoTransacao.js";
 export class Conta {
     nome;
+    // é interessante manter o nome e saldo como protected, pois se houver a criação de novos tipos de contas, eles podem ser utilizados
     saldo = JSON.parse(localStorage.getItem("saldo")) || 0;
     transacoes = JSON.parse(localStorage.getItem("transacoes"), (key, value) => {
         if (key === "data") {
@@ -28,6 +29,9 @@ export class Conta {
             gruposTransacoes.at(-1).transacoes.push(transacao);
         }
         return gruposTransacoes;
+    }
+    getTitular() {
+        return this.nome;
     }
     getSaldo() {
         return this.saldo;
