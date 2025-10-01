@@ -69,19 +69,19 @@ export class Conta {
 
     this.transacoes.push(novaTransacao);
     console.log(this.getGruposTransacoes());
-    Armazenador.setValor("transacoes", JSON.stringify(this.transacoes));
+    Armazenador.setValor("transacoes", this.transacoes);
   }
 
   @ValidaDebito
   debitar(valor: number): void {
     this.saldo -= valor;
-    Armazenador.setValor("saldo", this.saldo.toString());
+    Armazenador.setValor("saldo", this.saldo);
   }
 
   @ValidaDeposito
   depositar(valor: number): void {
     this.saldo += valor;
-    Armazenador.setValor("saldo", this.saldo.toString());
+    Armazenador.setValor("saldo", this.saldo);
   }
 }
 

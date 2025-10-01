@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Armazenador } from "./Armazenador.js";
-import { ValidaDebito } from "./Decorators.js";
+import { ValidaDebito, ValidaDeposito } from "./Decorators.js";
 import { TipoTransacao } from "./TipoTransacao.js";
 export class Conta {
     nome;
@@ -61,23 +61,23 @@ export class Conta {
         }
         this.transacoes.push(novaTransacao);
         console.log(this.getGruposTransacoes());
-        Armazenador.setValor("transacoes", JSON.stringify(this.transacoes));
+        Armazenador.setValor("transacoes", this.transacoes);
     }
     debitar(valor) {
         this.saldo -= valor;
-        Armazenador.setValor("saldo", this.saldo.toString());
+        Armazenador.setValor("saldo", this.saldo);
     }
     depositar(valor) {
-        if (valor <= 0) {
-            throw new Error("O valor a ser depositado deve ser maior que zero!");
-        }
         this.saldo += valor;
-        Armazenador.setValor("saldo", this.saldo.toString());
+        Armazenador.setValor("saldo", this.saldo);
     }
 }
 __decorate([
     ValidaDebito
 ], Conta.prototype, "debitar", null);
+__decorate([
+    ValidaDeposito
+], Conta.prototype, "depositar", null);
 export class ContaPremium extends Conta {
     registrarTransacao(transacao) {
         if (transacao.tipoTransacao === TipoTransacao.DEPOSITO) {
