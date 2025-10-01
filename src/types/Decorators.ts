@@ -15,3 +15,17 @@ export function ValidaDebito(target: any, propertyKey: string, descriptor: Prope
 
   return descriptor;
 }
+
+export function ValidaDeposito(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  const metodoOriginal = descriptor.value;
+
+  descriptor.value = function (valorDoDeposito: number) {
+    if (valorDoDeposito <= 0) {
+      throw new Error("O valor a ser depositado deve ser maior que zero!");
+    }
+
+    return metodoOriginal.apply(this, [valorDoDeposito]);
+  };
+
+  return descriptor;
+}
